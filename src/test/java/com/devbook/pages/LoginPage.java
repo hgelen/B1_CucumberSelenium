@@ -17,80 +17,88 @@ public class LoginPage extends BasePage {
     //}
 
 
+    @FindBy(id = "loginpage-input-email")
+    public WebElement userEmailInput_loc;
+    @FindBy(id = "loginpage-form-pw-input")
+    public WebElement passwordInput_loc;
+    @FindBy(id = "rcc-confirm-button")
+    public WebElement understandBtn_loc;
+    // BasePage taşıdık
+    //    @FindBy(id ="rcc-confirm-button" )
+    //  public WebElement understandBtn_loc;
+    @FindBy(id = "loginpage-form-btn")
+    public WebElement loginBtn_loc;
+    @FindBy(xpath = "//*[contains(text(),'valid')]")
+    public WebElement warningMessage_loc;
+    @FindBy(xpath = "//*[.='Please include a valid email!']")
+    public WebElement passwordWarningMessage_loc;
 
-        @FindBy(id = "loginpage-input-email")
-        public WebElement userEmailInput_loc;
-        @FindBy(id = "loginpage-form-pw-input")
-        public WebElement passwordInput_loc;
-        @FindBy(id = "rcc-confirm-button")
-        public WebElement understandBtn_loc;
-       // BasePage taşıdık
-        //    @FindBy(id ="rcc-confirm-button" )
-        //  public WebElement understandBtn_loc;
-        @FindBy(id = "loginpage-form-btn")
-        public WebElement loginBtn_loc;
-        @FindBy(xpath = "//*[.='Invalid Credentials!']")
-        public WebElement warningMessage_loc;
-        @FindBy(xpath = "//*[.='Please include a valid email!']")
-        public WebElement passwordWarningMessage_loc;
+    //from DemoQa website menu list example
+    @FindBy(css = ".menu-list")
+    public List<WebElement> menuList;
 
-        //from DemoQa website menu list example
-        @FindBy(css = ".menu-list")
-        public List<WebElement> menuList;
+    // Or true or False /  false or true  / true or true
+    @FindAll({@FindBy(id = "loginpage-input-email"), @FindBy(name = "email")})
+    public WebElement userInputSecondaryWay_loc;
 
-        // Or true or False /  false or true  / true or true
-        @FindAll({@FindBy(id = "loginpage-input-email"), @FindBy(name = "email")})
-        public WebElement userInputSecondaryWay_loc;
-
-        // and true & true
-        @FindBys({@FindBy(tagName = "p"), @FindBy(css = ".lead")})
-        public WebElement signAccountText_loc;
+    // and true & true
+    @FindBys({@FindBy(tagName = "p"), @FindBy(css = ".lead")})
+    public WebElement signAccountText_loc;
 
 
-        public void login_mtd() {
-            String userEmail = ConfigurationReader.get("usernameTeacher");
-            String userPassword = ConfigurationReader.get("passwordTeacher");
-            userEmailInput_loc.sendKeys(userEmail);
-            passwordInput_loc.sendKeys(userPassword);
-            understandBtn_loc.click();
-            loginBtn_loc.click();
-        }
-
-        public void login_mtd(String userEmail, String userPassword) {
-            userEmailInput_loc.sendKeys(userEmail);
-            passwordInput_loc.sendKeys(userPassword);
-            understandBtn_loc.click();
-            loginBtn_loc.click();
-        }
-
-        public void loginAsTeacher_mtd() {
-            String userEmail = ConfigurationReader.get("usernameTeacher");
-            String userPassword = ConfigurationReader.get("passwordTeacher");
-            userEmailInput_loc.sendKeys(userEmail);
-            passwordInput_loc.sendKeys(userPassword);
-            understandBtn_loc.click();
-            loginBtn_loc.click();
-        }
-
-        public void loginAsStudent_mtd() {
-            String userEmail = ConfigurationReader.get("usernameStudent");
-            String userPassword = ConfigurationReader.get("passwordStudent");
-            userEmailInput_loc.sendKeys(userEmail);
-            passwordInput_loc.sendKeys(userPassword);
-            understandBtn_loc.click();
-            loginBtn_loc.click();
-        }
-    public void loginAsDeveloper_mtd(){
-        String userEmail=ConfigurationReader.get("usernameDeveloper");
-        String userPassword=ConfigurationReader.get("passwordDeveloper");
+    public void login_mtd() {
+        String userEmail = ConfigurationReader.get("usernameTeacher");
+        String userPassword = ConfigurationReader.get("passwordTeacher");
         userEmailInput_loc.sendKeys(userEmail);
         passwordInput_loc.sendKeys(userPassword);
         understandBtn_loc.click();
         loginBtn_loc.click();
     }
-    public void getDisapearWorningMessage(String message){
-            String actualMessage=null;
+
+    public void login_mtd(String userEmail, String userPassword) {
+        userEmailInput_loc.sendKeys(userEmail);
+        passwordInput_loc.sendKeys(userPassword);
+        understandBtn_loc.click();
+        loginBtn_loc.click();
     }
-            //if (message.contains("@")){
-             //   actualMessage=userEmailInput_loc.getAttribute("validationMessage");
+
+    public void loginAsTeacher_mtd() {
+        String userEmail = ConfigurationReader.get("usernameTeacher");
+        String userPassword = ConfigurationReader.get("passwordTeacher");
+        userEmailInput_loc.sendKeys(userEmail);
+        passwordInput_loc.sendKeys(userPassword);
+        understandBtn_loc.click();
+        loginBtn_loc.click();
     }
+
+    public void loginAsStudent_mtd() {
+        String userEmail = ConfigurationReader.get("usernameStudent");
+        String userPassword = ConfigurationReader.get("passwordStudent");
+        userEmailInput_loc.sendKeys(userEmail);
+        passwordInput_loc.sendKeys(userPassword);
+        understandBtn_loc.click();
+        loginBtn_loc.click();
+    }
+
+    public void loginAsDeveloper_mtd() {
+        String userEmail = ConfigurationReader.get("usernameDeveloper");
+        String userPassword = ConfigurationReader.get("passwordDeveloper");
+        userEmailInput_loc.sendKeys(userEmail);
+        passwordInput_loc.sendKeys(userPassword);
+        understandBtn_loc.click();
+        loginBtn_loc.click();
+    }
+
+    public String getDisapearWorningMessage(String message) {
+        String actualMessage=null;
+        if(message.contains("@")){
+            actualMessage = userEmailInput_loc.getAttribute("validationMessage");
+        }else if(message.contains("valid")){
+            actualMessage=warningMessage_loc.getText();
+        }
+        return actualMessage;
+    }
+
+
+
+}

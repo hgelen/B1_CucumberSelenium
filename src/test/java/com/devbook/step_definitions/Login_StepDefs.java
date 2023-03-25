@@ -29,7 +29,7 @@ public class Login_StepDefs {
     }
     @Then("The user should be able to login")
     public void the_user_should_be_able_to_login() {
-        BrowserUtils.waitFor(10);
+        BrowserUtils.waitFor(2);
         String actualMessage= dashboardPage.welcomeMessage_loc.getText();
         Assert.assertTrue(actualMessage.contains("Welcome"));
     }
@@ -60,16 +60,20 @@ public class Login_StepDefs {
     @And("The welcome message contains {string}")
     public void theWelcomeMessageContains(String user) {
         //BrowserUtils.waitFor(2);
-        BrowserUtils.waitForVisibility(dashboardPage.welcomeMessage_loc,10);
+        BrowserUtils.waitForVisibility(dashboardPage.welcomeMessage_loc,5);
         String actualMessage = dashboardPage.welcomeMessage_loc.getText();
         System.out.println("actualMessage = " + actualMessage);
         Assert.assertTrue(actualMessage.contains(user));
     }
 
-    @Then("The worning message contains {string}")
-    public void theWorningMessageContains(String arg0) {
-        String actualMessage= loginPage.userEmailInput_loc.getAttribute("validationMessage");
-        System.out.println("actualMessage = " + actualMessage);
-        //Assert.assertEquals();
+    @Then("The warning message contains {string}")
+    public void the_warning_message_contains(String expectedMessage) {
+        BrowserUtils.waitForPageToLoad(5);
+        loginPage.getDisapearWorningMessage(expectedMessage);
+        Assert.assertEquals(expectedMessage,loginPage.getDisapearWorningMessage(expectedMessage));
+
+//        String actualMessage=loginPage.userEmailInput_loc.getAttribute("validationMessage");
+//        System.out.println("actualMessage = " + actualMessage);
+//        Assert.assertEquals(expectedMessage,actualMessage);
     }
 }
